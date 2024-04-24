@@ -10,13 +10,14 @@ FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt && \
     /usr/local/openresty/luajit/bin/luarocks install lua-resty-string && \
     /usr/local/openresty/luajit/bin/luarocks install lua-cjson && \
-    /usr/local/openresty/luajit/bin/luarocks install lua-resty-rsa
+    /usr/local/openresty/luajit/bin/luarocks install lua-resty-rsa && \
+    /usr/local/openresty/luajit/bin/luarocks install lua-resty-dns
 
 # create default directory /var/log/nginx 
 RUN mkdir -p /var/log/nginx
 
 # copy all nginx configuration files
 COPY etc/nginx /etc/nginx
-
+COPY docker-entrypoint.sh /
 EXPOSE 80 443
 CMD ["/docker-entrypoint.sh"]
