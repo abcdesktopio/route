@@ -104,7 +104,7 @@ server {
 	# replace the default resolver ip addr
 	# This file /tmp/resolver.conf is created by docker-entrypoint.sh 
 	# Read nameserver in /etc/resolv.conf and create /tmp/resolver.conf
-	include /tmp/resolver.conf
+	include /tmp/resolver.conf;
 	
 	listen 80 default_server;
 	# listen [::]:80 default_server ipv6only=on;
