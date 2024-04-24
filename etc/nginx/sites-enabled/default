@@ -124,11 +124,11 @@ server {
         set $spawner_service_tcp_port           29786;
 	set $signalling_service_tcp_port        29787; 
 
-	# use var get hostname
-	set $my_speedtest 'speedtest';
-        set $my_proxy     'pyos';
-        set $my_console   'console';
-        set $my_website   'website';
+	# use env vars
+	set $my_speedtest 'return os.getenv("SPEEDTEST_FQDN")';
+        set $my_pyos      'return os.getenv("PYOS_FQDN")';
+        set $my_console   'return os.getenv("CONSOLE_FQDN")';
+        set $my_website   'return os.getenv("WEBSITE_FQDN")';
 
 	#add header 
 	add_header X-Frame-Options "SAMEORIGIN";
