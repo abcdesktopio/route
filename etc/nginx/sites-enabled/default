@@ -104,8 +104,7 @@ init_by_lua_block {
   my_speedtest = os.getenv("SPEEDTEST_FQDN")
   my_pyos = os.getenv("PYOS_FQDN")
   my_console = os.getenv("CONSOLE_FQDN")
-  my_website = os.getenv("WEBSITE_FQDN")
-}
+  my_website = os.getenv("WEBSITE_FQDN") }
 
 
 server {
@@ -154,10 +153,10 @@ server {
 
 
 	# use env vars
-	set_by_lua_block $my_speedtest { return os.getenv("SPEEDTEST_FQDN")' }
-        set_by_lua_block $my_pyos      { return os.getenv("PYOS_FQDN")'      }
-        set_by_lua_block $my_console   { return os.getenv("CONSOLE_FQDN")'   }
-        set_by_lua_block $my_website   { return os.getenv("WEBSITE_FQDN")'   }
+	#set_by_lua_block $my_speedtest { return os.getenv("SPEEDTEST_FQDN")' }
+        #set_by_lua_block $my_pyos      { return os.getenv("PYOS_FQDN")'      }
+        #set_by_lua_block $my_console   { return os.getenv("CONSOLE_FQDN")'   }
+        #set_by_lua_block $my_website   { return os.getenv("WEBSITE_FQDN")'   }
 
 	#add header 
 	add_header X-Frame-Options "SAMEORIGIN";
