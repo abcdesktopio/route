@@ -99,6 +99,15 @@ types {
     font/opentype                        otf;
 }
 
+
+init_by_lua_block { 
+  my_speedtest = os.getenv("SPEEDTEST_FQDN")
+  my_pyos = os.getenv("PYOS_FQDN")
+  my_console = os.getenv("CONSOLE_FQDN")
+  my_website = os.getenv("WEBSITE_FQDN")
+}
+
+
 server {
 
 	# replace the default resolver ip addr
@@ -124,11 +133,31 @@ server {
         set $spawner_service_tcp_port           29786;
 	set $signalling_service_tcp_port        29787; 
 
+	# set $my_speedtest '';
+        # set $my_pyos '';
+        # set $my_console '';
+        # set $my_website '';
+
+        # use env vars
+        set_by_lua_block $my_speedtest { return my_speedtest }
+        set_by_lua_block $my_pyos      { return my_pyos      }
+        set_by_lua_block $my_console   { return my_console   }
+        set_by_lua_block $my_website   { return my_website   }
+
+        #content_by_lua_block {
+        #     ngx.say('Hello,world!')
+        #     ngx.var.my_speedtest = os.getenv("SPEEDTEST_FQDN")
+        #     ngx.var.my_pyos = os.getenv("PYOS_FQDN")
+        #     ngx.var.my_console = os.getenv("CONSOLE_FQDN")
+        #     ngx.var.my_website = os.getenv("WEBSITE_FQDN")
+        #}
+
+
 	# use env vars
-	set $my_speedtest 'return os.getenv("SPEEDTEST_FQDN")';
-        set $my_pyos      'return os.getenv("PYOS_FQDN")';
-        set $my_console   'return os.getenv("CONSOLE_FQDN")';
-        set $my_website   'return os.getenv("WEBSITE_FQDN")';
+	set_by_lua_block $my_speedtest { return os.getenv("SPEEDTEST_FQDN")' }
+        set_by_lua_block $my_pyos      { return os.getenv("PYOS_FQDN")'      }
+        set_by_lua_block $my_console   { return os.getenv("CONSOLE_FQDN")'   }
+        set_by_lua_block $my_website   { return os.getenv("WEBSITE_FQDN")'   }
 
 	#add header 
 	add_header X-Frame-Options "SAMEORIGIN";
