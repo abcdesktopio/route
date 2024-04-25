@@ -1,69 +1,3 @@
-
-# THIS FILE IS OVERWRITTE BY KUBERNETES CONFIG MAP
-# 
-# LOOK AT
-# https://raw.githubusercontent.com/abcdesktopio/conf/main/kubernetes/abcdesktop-3.0.yaml
-# https://raw.githubusercontent.com/abcdesktopio/conf/main/kubernetes/abcdesktop-3.1.yaml
-#
-########
-# ---
-# apiVersion: v1
-# kind: ConfigMap
-# metadata:
-#   name: nginx-config
-#   namespace: abcdesktop
-#   labels:
-#     abcdesktop/role: nginx-config
-# data:
-#   default: | 
-#     lua_package_path "/usr/local/share/lua/5.1/?.lua;;";
-#     types {
-#         # Web fonts
-#         application/font-woff2               woff2;
-#         application/-font-ttf                ttc ttf;
-#         font/opentype                        otf;
-#     }
-#     server {
-#         resolver 'kube-dns.kube-system.svc.cluster.local';
-#         set $my_speedtest 'speedtest.abcdesktop.svc.cluster.local';
-#         set $my_proxy 'pyos.abcdesktop.svc.cluster.local';
-#         listen 80;
-#         server_name _;
-#         root /var/webModules;
-#         index index.html index.htm;
-#         # default abcdesktop.io oc.user tcp port
-#         set $pulseaudio_http_port               4714;
-#         set $ws_tcp_bridge_tcp_port             6081;
-#         set $api_service_tcp_port               8000;
-#         set $filemanager_bridge_tcp_port        29780;
-#         set $xterm_tcp_port                     29781;
-#         set $printerfile_service_tcp_port       29782;
-#         set $file_service_tcp_port              29783;
-#         set $broadcast_tcp_port                 29784;
-#         set $lync_service_tcp_port              29785;
-#         set $spawner_service_tcp_port           29786;
-# 	  set $signalling_service_tcp_port        29787; 
-#         # uncomment to use env var
-#         # set_by_lua  $filemanager_bridge_tcp_port 'return os.getenv("FILEMANAGER_BRIDGE_TCP_PORT")';
-#         # set_by_lua  $broadcast_tcp_port 'return os.getenv("BROADCAST_SERVICE_TCP_PORT")';
-#         # set_by_lua  $ws_tcp_bridge_tcp_port 'return os.getenv("WS_TCP_BRIDGE_SERVICE_TCP_PORT")';
-#         # set_by_lua  $spawner_service_tcp_port 'return os.getenv("SPAWNER_SERVICE_TCP_PORT")';
-#         # set_by_lua  $xterm_tcp_port 'return os.getenv("XTERM_TCP_PORT")';
-#         # set_by_lua  $file_service_tcp_port 'return os.getenv("FILE_SERVICE_TCP_PORT")';
-#         # set_by_lua  $pulseaudio_http_port 'return os.getenv("PULSEAUDIO_HTTP_PORT")';
-#         location /nstatus {
-#                  # allow 127.0.0.1;
-#                  # deny all;
-#                  stub_status;
-#         }
-#         
-#         include route.conf;
-#     }
-#  ---
-# 
-# 
-########
-
 ##
 # You should look at the following URL's in order to grasp a solid understanding
 # of Nginx configuration files in order to fully unleash the power of Nginx.
@@ -78,11 +12,6 @@
 ##
 
 lua_package_path "/usr/local/share/lua/5.1/?.lua;;";
-
-# this runs before forking out nginx worker processea
-# init_worker_by_lua_file init.targetmap.lua 
-
-
 
 types {
     # Web fonts
@@ -100,15 +29,16 @@ types {
 }
 
 
+# read env vars in init_by_lua_block
 init_by_lua_block { 
   my_speedtest = os.getenv("SPEEDTEST_FQDN")
   my_pyos = os.getenv("PYOS_FQDN")
   my_console = os.getenv("CONSOLE_FQDN")
-  my_website = os.getenv("WEBSITE_FQDN") }
+  my_website = os.getenv("WEBSITE_FQDN") 
+}
 
 
 server {
-
 	# replace the default resolver ip addr
 	# This file /tmp/resolver.conf is created by docker-entrypoint.sh 
 	# Read nameserver in /etc/resolv.conf and create /tmp/resolver.conf
@@ -132,27 +62,13 @@ server {
         set $spawner_service_tcp_port           29786;
 	set $signalling_service_tcp_port        29787; 
 
-	# set $my_speedtest '';
-        # set $my_pyos '';
-        # set $my_console '';
-        # set $my_website '';
-
         # use env vars
         set_by_lua_block $my_speedtest { return my_speedtest }
         set_by_lua_block $my_pyos      { return my_pyos      }
         set_by_lua_block $my_console   { return my_console   }
         set_by_lua_block $my_website   { return my_website   }
-
-        #content_by_lua_block {
-        #     ngx.say('Hello,world!')
-        #     ngx.var.my_speedtest = os.getenv("SPEEDTEST_FQDN")
-        #     ngx.var.my_pyos = os.getenv("PYOS_FQDN")
-        #     ngx.var.my_console = os.getenv("CONSOLE_FQDN")
-        #     ngx.var.my_website = os.getenv("WEBSITE_FQDN")
-        #}
-
-
-	# use env vars
+	
+	# this section code does not work
 	#set_by_lua_block $my_speedtest { return os.getenv("SPEEDTEST_FQDN")' }
         #set_by_lua_block $my_pyos      { return os.getenv("PYOS_FQDN")'      }
         #set_by_lua_block $my_console   { return os.getenv("CONSOLE_FQDN")'   }
