@@ -6,6 +6,7 @@ on:
 
 env:
     imagetag: "${{ github.event.client_payload.ref || github.ref_name }}"
+    ref: "${{ github.event.client_payload.ref || github.ref_name }}"
       
 jobs:
   build:
@@ -15,6 +16,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with: 
+          ref: ${{ env.ref }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
