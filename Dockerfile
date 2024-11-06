@@ -11,6 +11,11 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# this is a debug info
+RUN ls -la /usr/local/openresty/luajit/lib/libluajit-5.1.so.2 && \
+    md5sum /usr/local/openresty/luajit/lib/libluajit-5.1.so.2
+   
+
 # install lua libs
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt && \
     /usr/local/openresty/luajit/bin/luarocks install lua-resty-string && \
