@@ -43,7 +43,7 @@ jobs:
           push: true
           build-args: |
             BASE_IMAGE_RELEASE=jammy
-            BASE_IMAGE=openresty/openresty
+            BASE_IMAGE=abcdesktopio/openresty
           tags: |
             abcdesktopio/route:${{ env.imagetag }}
 
