@@ -62,6 +62,7 @@ server {
         set $spawner_service_tcp_port           29786;
 	set $signalling_service_tcp_port        29787; 
 	set $jsmpeg_service_tcp_port        	29788;
+	set $microphone_service_tcp_port        29789;
 
         # use env vars
         set_by_lua_block $my_speedtest { return my_speedtest }
