@@ -7,11 +7,11 @@ ARG BASE_IMAGE=openresty/openresty
 FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE
 
 # install lua libs
-RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt && \
-    /usr/local/openresty/luajit/bin/luarocks install lua-resty-string && \ 
-    /usr/local/openresty/luajit/bin/luarocks install lua-cjson && \
-    /usr/local/openresty/luajit/bin/luarocks install lua-resty-rsa && \
-    /usr/local/openresty/luajit/bin/luarocks install lua-resty-dns
+RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt
+RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-string 
+RUN /usr/local/openresty/luajit/bin/luarocks install lua-cjson
+RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-rsa
+RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-dns
 
 # create default directory /var/log/nginx 
 RUN mkdir -p /var/log/nginx
