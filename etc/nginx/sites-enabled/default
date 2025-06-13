@@ -30,11 +30,18 @@ types {
 
 
 # read env vars in init_by_lua_block
-init_by_lua_block { 
-  my_speedtest = os.getenv("SPEEDTEST_FQDN")
-  my_pyos = os.getenv("PYOS_FQDN")
-  my_console = os.getenv("CONSOLE_FQDN")
-  my_website = os.getenv("WEBSITE_FQDN") 
+init_by_lua_block {
+
+  pyos_fqdn = os.getenv("PYOS_FQDN")
+  if pyos_fqdn == nil or pyos_fqdn == ''  then
+    pyos_fqdn = "pyos"
+  end
+
+  pyos_service_port = os.getenv("PYOS_SERVICE_PORT")
+  if pyos_service_port == nil or pyos_service_port == '' then
+    pyos_service_port = "8000"
+  end
+
 }
 
 
@@ -53,7 +60,6 @@ server {
 	# default desktop oc.user tcp port 
 	set $pulseaudio_http_port               4714;
         set $ws_tcp_bridge_tcp_port             6081;
-        set $api_service_tcp_port               8000;
         set $xterm_tcp_port                     29781;
         set $printerfile_service_tcp_port       29782;
         set $file_service_tcp_port              29783;
@@ -64,17 +70,11 @@ server {
 	set $sound_service_tcp_port        	29788;
 	set $microphone_service_tcp_port        29789;
 
-        # use env vars
-        set_by_lua_block $my_speedtest { return my_speedtest }
-        set_by_lua_block $my_pyos      { return my_pyos      }
-        set_by_lua_block $my_console   { return my_console   }
-        set_by_lua_block $my_website   { return my_website   }
-	
-	# this section code does not work
-	#set_by_lua_block $my_speedtest { return os.getenv("SPEEDTEST_FQDN")' }
-        #set_by_lua_block $my_pyos      { return os.getenv("PYOS_FQDN")'      }
-        #set_by_lua_block $my_console   { return os.getenv("CONSOLE_FQDN")'   }
-        #set_by_lua_block $my_website   { return os.getenv("WEBSITE_FQDN")'   }
+        # use env vars to read pyos_fqdn and pyos_service_port from ENV
+	# env MUST be define in nginx.conf 
+	# must use init_by_lua_block to read env vars
+        set_by_lua_block $pyos_fqdn 		{ return pyos_fqdn  }	
+        set_by_lua_block $pyos_service_port   	{ return pyos_service_port  }	
 
 	#add header 
 	add_header X-Frame-Options "SAMEORIGIN";
