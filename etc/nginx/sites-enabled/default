@@ -70,7 +70,9 @@ server {
 	set $sound_service_tcp_port        	29788;
 	set $microphone_service_tcp_port        29789;
 
-        # use env vars to read pyos_service_tcp_port from ENV
+        # use env vars to read pyos_fqdn and pyos_service_port from ENV
+	# env MUST be define in nginx.conf 
+	# must use init_by_lua_block to read env vars
         set_by_lua_block $pyos_fqdn 		{ return pyos_fqdn  }	
         set_by_lua_block $pyos_service_port   	{ return pyos_service_port  }	
 
