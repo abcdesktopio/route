@@ -28,8 +28,9 @@ jobs:
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
-         username: ${{ secrets.DOCKER_USERNAME }}
-         password: ${{ secrets.DOCKER_TOKEN }}
+          registry: https://ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
          
       - name: "image tag"
         run: echo "image tag set to '${{ env.imagetag }}'"
@@ -45,7 +46,7 @@ jobs:
             BASE_IMAGE_RELEASE=jammy
             BASE_IMAGE=abcdesktopio/openresty
           tags: |
-            abcdesktopio/route:${{ env.imagetag }}
+            ghcr.io/abcdesktopio/route:${{ env.imagetag }}
 
       - name: Output image name
         id: imagename 
