@@ -1,7 +1,7 @@
 # Default release is jammy
 ARG BASE_IMAGE_RELEASE=jammy
 # Default base image 
-ARG BASE_IMAGE=abcdesktopio/openresty
+ARG BASE_IMAGE=openresty/openresty
 
 # --- START Build image ---
 FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE
