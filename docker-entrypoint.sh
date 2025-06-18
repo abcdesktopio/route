@@ -15,4 +15,4 @@ export PYOS_FQDN=${PYOS_FQDN:-${PYOS_SERVICE_HOST}}
 echo "PYOS_FQDN=$PYOS_FQDN"
 echo "PYOS_SERVICE_PORT=$PYOS_SERVICE_PORT"
 # export 
-/usr/local/openresty/nginx/sbin/nginx -p /etc/nginx -c nginx.conf -e /var/log/nginx/error.log
+exec /usr/local/openresty/nginx/sbin/nginx -p /etc/nginx -c nginx.conf -e /var/log/nginx/error.log
