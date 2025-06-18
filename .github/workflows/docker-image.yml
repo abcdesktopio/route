@@ -44,7 +44,7 @@ jobs:
           push: true
           build-args: |
             BASE_IMAGE_RELEASE=alpine
-            BASE_IMAGE=abcdesktopio/openresty
+            BASE_IMAGE=openresty/openresty
           tags: |
             ghcr.io/abcdesktopio/route:alpine${{ env.imagetag }}
 
