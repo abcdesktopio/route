@@ -40,13 +40,13 @@ jobs:
         with:
           file: Dockerfile
           context: .
-          platforms: linux/amd64
+          platforms: linux/amd64, linux/arm64,
           push: true
           build-args: |
-            BASE_IMAGE_RELEASE=jammy
+            BASE_IMAGE_RELEASE=alpine
             BASE_IMAGE=abcdesktopio/openresty
           tags: |
-            ghcr.io/abcdesktopio/route:${{ env.imagetag }}
+            ghcr.io/abcdesktopio/route:alpine${{ env.imagetag }}
 
       - name: Output image name
         id: imagename 
