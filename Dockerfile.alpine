@@ -1,0 +1,25 @@
+# Default release is jammy
+ARG BASE_IMAGE_RELEASE=alpine
+# Default base image 
+ARG BASE_IMAGE=openresty/openresty
+# openresty/openresty:alpine
+# --- START Build image ---
+FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE
+
+RUN apk upgrade --no-cache && \
+    apk add luarocks5.1 lua5.1-dev musl-dev gcc bash && \
+    luarocks-5.1 install lua-resty-jwt && \
+    luarocks-5.1 install lua-resty-string && \
+    luarocks-5.1 install lua-cjson && \
+    luarocks-5.1 install lua-resty-rsa && \ 
+    luarocks-5.1 install lua-resty-dns && \
+    apk del luarocks5.1 lua5.1-dev musl-dev gcc
+
+# create default directory /var/log/nginx 
+RUN mkdir -p /var/log/nginx
+
+# copy all nginx configuration files
+COPY etc/nginx /etc/nginx
+COPY docker-entrypoint.sh /
+EXPOSE 80 443
+CMD ["/docker-entrypoint.sh"]
