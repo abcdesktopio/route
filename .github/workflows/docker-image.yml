@@ -46,7 +46,7 @@ jobs:
             BASE_IMAGE_RELEASE=alpine
             BASE_IMAGE=openresty/openresty
           tags: |
-            ghcr.io/abcdesktopio/route:alpine${{ env.imagetag }}
+            ghcr.io/abcdesktopio/route:${{ env.imagetag }}
 
       - name: Output image name
         id: imagename 
