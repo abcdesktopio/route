@@ -1,5 +1,10 @@
 # Default release is jammy
 ARG BASE_IMAGE_RELEASE=alpine
+
+
+
+
+
 # Default base image 
 ARG BASE_IMAGE=openresty/openresty
 # openresty/openresty:alpine
@@ -16,7 +21,7 @@ RUN apk upgrade --no-cache && \
     apk del luarocks5.1 lua5.1-dev musl-dev gcc
 
 # create default directory /var/log/nginx 
-RUN mkdir -p /var/log/nginx
+RUN mkdir -p /var/log/nginx /var/lib/nginx/html
 
 # copy all nginx configuration files
 COPY etc/nginx /etc/nginx

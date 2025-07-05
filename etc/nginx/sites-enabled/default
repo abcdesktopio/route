@@ -31,17 +31,14 @@ types {
 
 # read env vars in init_by_lua_block
 init_by_lua_block {
-
   pyos_fqdn = os.getenv("PYOS_FQDN")
   if pyos_fqdn == nil or pyos_fqdn == ''  then
     pyos_fqdn = "pyos"
   end
-
   pyos_service_port = os.getenv("PYOS_SERVICE_PORT")
   if pyos_service_port == nil or pyos_service_port == '' then
     pyos_service_port = "8000"
   end
-
 }
 
 
@@ -50,11 +47,16 @@ server {
 	# This file /tmp/resolver.conf is created by docker-entrypoint.sh 
 	# Read nameserver in /etc/resolv.conf and create /tmp/resolver.conf
 	include /tmp/resolver.conf;
-	
-	listen 80 default_server;
-	# listen [::]:80 default_server ipv6only=on;
+	# server_tokens to off, the server header will only indicate Nginx
+	server_tokens off;
 
-	root /var/webModules;
+	listen 80 default_server;
+	listen [::]:80 default_server;
+	#
+	# listen 443 ssl http2 default_server;
+	# listen [::]:443 ssl http2 default_server;
+	include snippets/ssl.conf;
+
 	index index.html index.htm;
 
 	# default desktop oc.user tcp port 
@@ -76,7 +78,7 @@ server {
         set_by_lua_block $pyos_fqdn 		{ return pyos_fqdn  }	
         set_by_lua_block $pyos_service_port   	{ return pyos_service_port  }	
 
-	#add header 
+	# add header 
 	add_header X-Frame-Options "SAMEORIGIN";
 	add_header X-XSS-Protection "1; mode=block";
 

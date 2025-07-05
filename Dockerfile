@@ -14,7 +14,7 @@ RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-rsa
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-dns
 
 # create default directory /var/log/nginx 
-RUN mkdir -p /var/log/nginx
+RUN mkdir -p /var/log/nginx /var/lib/nginx/html
 
 # copy all nginx configuration files
 COPY etc/nginx /etc/nginx
