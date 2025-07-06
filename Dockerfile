@@ -17,7 +17,9 @@ RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-dns
 COPY etc/nginx /etc/nginx
 
 # create default directory /var/log/nginx 
-RUN mkdir -p /etc/nginx/logs /var/log/nginx /var/lib/nginx/html/.well-known/acme-challenge
+RUN mkdir -p /etc/nginx/logs 
+RUN mkdir -p /var/log/nginx 
+RUN mkdir -p /var/lib/nginx/html/.well-known/acme-challenge
 
 COPY docker-entrypoint.sh /
 EXPOSE 80 443
