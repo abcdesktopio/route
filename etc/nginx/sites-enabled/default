@@ -11,23 +11,8 @@
 # Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
 ##
 
+# set lua path
 lua_package_path "/usr/local/share/lua/5.1/?.lua;;";
-
-types {
-    # Web fonts
-    application/font-woff2                woff2;
-
-    # Browsers usually ignore the font media types and simply sniff
-    # the bytes to figure out the font type.
-    # https://mimesniff.spec.whatwg.org/#matching-a-font-type-pattern
-    #
-    # However, Blink and WebKit based browsers will show a warning
-    # in the console if the following font types are served with any
-    # other media types.
-    application/-font-ttf                ttc ttf;
-    font/opentype                        otf;
-}
-
 
 # read env vars in init_by_lua_block
 init_by_lua_block {
@@ -41,7 +26,7 @@ init_by_lua_block {
   end
 }
 
-
+# nginx server config
 server {
 	# replace the default resolver ip addr
 	# This file /tmp/resolver.conf is created by docker-entrypoint.sh 
@@ -52,11 +37,14 @@ server {
 
 	listen 80 default_server;
 	listen [::]:80 default_server;
-	#
+
+	# 
 	# listen 443 ssl http2 default_server;
 	# listen [::]:443 ssl http2 default_server;
-	include snippets/ssl.conf;
-
+	# server_name example.org;
+	# ssl_certificate     /etc/ssl/nginx/fullchain.pem;
+	# ssl_certificate_key /etc/ssl/nginx/privkey.pem;	
+	
 	index index.html index.htm;
 
 	# default desktop oc.user tcp port 
