@@ -13,11 +13,12 @@ RUN /usr/local/openresty/luajit/bin/luarocks install lua-cjson
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-rsa
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-dns
 
+# copy all nginx configuration files
+COPY etc/nginx /etc/nginx
+
 # create default directory /var/log/nginx 
 RUN mkdir -p /etc/nginx/logs /var/log/nginx /var/lib/nginx/html/.well-known/acme-challenge
 
-# copy all nginx configuration files
-COPY etc/nginx /etc/nginx
 COPY docker-entrypoint.sh /
 EXPOSE 80 443
 CMD ["/docker-entrypoint.sh"]
