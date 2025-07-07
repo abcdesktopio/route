@@ -1,13 +1,15 @@
 # Default release is jammy
 ARG BASE_IMAGE_RELEASE=alpine
+
 # Default base image 
 ARG BASE_IMAGE=openresty/openresty
 # openresty/openresty:alpine
 # --- START Build image ---
 FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE
 
+# install lua lib for nginx lua scripts 
 RUN apk upgrade --no-cache && \
-    apk add luarocks5.1 lua5.1-dev musl-dev gcc bash && \
+    apk add --no-cache luarocks5.1 lua5.1-dev musl-dev gcc bash && \
     luarocks-5.1 install lua-resty-jwt && \
     luarocks-5.1 install lua-resty-string && \
     luarocks-5.1 install lua-cjson && \
@@ -15,8 +17,11 @@ RUN apk upgrade --no-cache && \
     luarocks-5.1 install lua-resty-dns && \
     apk del luarocks5.1 lua5.1-dev musl-dev gcc
 
+# add certbot for letsencrypt online service
+RUN apk add --no-cache certbot
+
 # create default directory /var/log/nginx 
-RUN mkdir -p /var/log/nginx
+RUN mkdir -p /var/log/nginx /var/lib/nginx/html
 
 # copy all nginx configuration files
 COPY etc/nginx /etc/nginx
