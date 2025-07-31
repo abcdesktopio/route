@@ -3,6 +3,7 @@ name: build route image
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 env:
     imagetag: "${{ github.event.client_payload.ref || github.ref_name }}"
