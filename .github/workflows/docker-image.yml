@@ -3,6 +3,9 @@ name: build route image
 on:
   push:
   pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0-6'
 
 env:
     imagetag: "${{ github.event.client_payload.ref || github.ref_name }}"
