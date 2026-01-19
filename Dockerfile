@@ -6,6 +6,9 @@ ARG BASE_IMAGE=openresty/openresty
 # --- START Build image ---
 FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE
 
+# update and upgrade for security fix
+RUN apt-get update && apt-get upgrade -y 
+
 # install lua libs
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-jwt
 RUN /usr/local/openresty/luajit/bin/luarocks install lua-resty-string 
