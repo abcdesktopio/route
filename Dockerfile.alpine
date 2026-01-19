@@ -3,7 +3,10 @@ ARG BASE_IMAGE_RELEASE=alpine
 
 # Default base image 
 ARG BASE_IMAGE=openresty/openresty
-# openresty/openresty:alpine
+
+# the default image is openresty/openresty:alpine
+
+
 # --- START Build image ---
 FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE
 
