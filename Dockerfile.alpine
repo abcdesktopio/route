@@ -11,8 +11,8 @@ ARG BASE_IMAGE=openresty/openresty
 FROM $BASE_IMAGE:$BASE_IMAGE_RELEASE
 
 # install lua lib for nginx lua scripts 
-RUN apk update && \
-    apk upgrade --no-cache && \
+RUN apk upgrade --no-cache && 
+    apk update --no-cache && \
     apk add --no-cache luarocks5.1 lua5.1-dev musl-dev gcc bash && \
     luarocks-5.1 install lua-resty-jwt && \
     luarocks-5.1 install lua-resty-string && \
