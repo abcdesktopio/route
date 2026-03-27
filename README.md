@@ -23,7 +23,7 @@
 │  │  get.targetmap.lua                                │  │
 │  │  - Extract JWT from request                       │  │
 │  │  - Verify JWT signature                           │  │
-│  │  - Decrypt payload to get target hostname         │  │
+│  │  - RSA Decrypt payload to get target hostname     │  │
 │  │  - Cache result in shared dict (10 min)           │  │
 │  └───────────────────────────────────────────────────┘  │
 └────────┬────────────────────────────────────────────────┘
@@ -64,7 +64,7 @@ This Lua script is the core authentication and routing engine. It executes durin
 4. Verify JWT signature
          │
          ▼
-5. Decrypt payload.hash using private key
+5. Decrypt payload.hash using dedicated RSA private key
          │
          ▼
 6. Cache result in targetmap (TTL: min(exp-now, 600s))
