@@ -355,3 +355,13 @@ FROM openresty/openresty:alpine
 - **Error log:** `/var/log/nginx/error.log`
 - **JWT errors:** Logged at `ngx.ERR` level
 - **Cache hits:** Logged at `ngx.NOTICE` level with TTL and target
+
+## Rebuild the container images
+
+
+- from `openresty/openresty` alpine
+  
+```
+REPO=abcdesdesktop
+docker build -t $REPO/router:4.4 -f Dockerfile.alpine --build-arg BASE_IMAGE_RELEASE=alpine --build-arg BASE_IMAGE=openresty/openresty .
+```
