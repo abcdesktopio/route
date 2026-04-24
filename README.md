@@ -192,12 +192,13 @@ Sets the nginx variable used by `proxy_pass http://$target:$port/`
 | `/snapshot` | `$snapshot_service_tcp_port` | 29785 | HTTP |
 | `/console` | `console` upstream | - | HTTP |
 
-### PyOS Endpoints
+### pyos Endpoints
 
-Pattern: `/(moauth|fauth|gauth|oauth|autologin|API|status)`
+Pattern proxy_pass backend: `http://$pyos_fqdn:$pyos_service_port`:
 
-- Backend: `http://$pyos_fqdn:$pyos_service_port`
-- Timeout: 360 seconds (supports long-running operations like image pulls)
+- `/API/manager/image` with client_max_body_size 16m;
+- `/API/composer/launchdesktop` with proxy_read_timeout 600s;
+- `/API` 
 
 ### Utility Endpoints
 
@@ -358,10 +359,11 @@ FROM openresty/openresty:alpine
 
 ## Rebuild the container images
 
-
 - from `openresty/openresty` alpine
   
 ```
+git clone -b https://github.com/abcdesktopio/route.git route
+cd route
 REPO=abcdesdesktop
-docker build -t $REPO/router:4.4 -f Dockerfile.alpine --build-arg BASE_IMAGE_RELEASE=alpine --build-arg BASE_IMAGE=openresty/openresty .
+docker build -t $REPO/route:4.4 -f Dockerfile.alpine --build-arg BASE_IMAGE_RELEASE=alpine --build-arg BASE_IMAGE=openresty/openresty .
 ```
