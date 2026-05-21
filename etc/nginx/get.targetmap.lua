@@ -105,8 +105,8 @@ if target == nil then
 	local jwt_obj = jwt:verify( jwt_secret, jwt_token)
 
 	if not jwt_obj["verified"] then
-		ngx.log( ngx.ERR, 'jwt_token=' .. jwt_token )
-		ngxexitresponse( ngx.HTTP_UNAUTHORIZED, jwt_obj.reason )
+		ngx.log( ngx.ERR, 'jwt_token is not verified ' .. jwt_obj.reason )
+		ngxexitresponse( ngx.HTTP_UNAUTHORIZED, 'bad jwt' )
 	end
 
 	local payload = jwt_obj.payload
