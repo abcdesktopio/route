@@ -359,7 +359,7 @@ FROM openresty/openresty:alpine
 
 ## Rebuild the container images
 
-- from `openresty/openresty` alpine
+- FROM `openresty/openresty:alpine`
   
 ```
 git clone -b https://github.com/abcdesktopio/route.git route
