@@ -12,8 +12,20 @@ echo "resolver $NAMESERVER_RESOLVER;">/tmp/resolver.conf
 echo NGINX resolver directive dump 
 cat /tmp/resolver.conf
 # end of create file /tmp/resolver.conf
-
 echo "resolver=$NAMESERVER_RESOLVER"
+
+
+# Read the search domain in /etc/resolv.conf
+DOMAIN=$(grep ^search /etc/resolv.conf |awk -F ' ' '{ print $2}') 
+nslookup "openapi.$DOMAIN"
+if [ $? -eq 0 ]; then
+    echo 'openapi service is defined'
+    cp /etc/nginx/_openapi.conf /etc/nginx/openapi.conf
+fi
+
+
+
+
 echo "=== dump vars ==="
 export PYOS_FQDN=${PYOS_FQDN:-${PYOS_SERVICE_HOST}}
 echo "PYOS_FQDN=$PYOS_FQDN"
