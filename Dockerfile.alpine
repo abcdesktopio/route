@@ -29,5 +29,12 @@ RUN mkdir -p /var/log/nginx /var/lib/nginx/html
 # copy all nginx configuration files
 COPY etc/nginx /etc/nginx
 COPY docker-entrypoint.sh /
-EXPOSE 80 443
+
+
+# create an unprivileged user to run od.py
+RUN addgroup -S -g 1000 nginx && \
+    adduser -S -D -H -u 1000 -G nginx nginx && \
+    chown nginx:nginx /var/log/nginx
+
+EXPOSE 8000 8443
 CMD ["/docker-entrypoint.sh"]
