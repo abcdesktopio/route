@@ -37,4 +37,5 @@ RUN addgroup -S -g 1000 nginx && \
     chown nginx:nginx /var/log/nginx
 
 EXPOSE 8000 8443
+USER nginx
 CMD ["/docker-entrypoint.sh"]
