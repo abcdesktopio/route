@@ -34,8 +34,8 @@ COPY docker-entrypoint.sh /
 RUN addgroup -S -g 1000 nginx && \
     adduser -S -D -H -u 1000 -G nginx nginx 
 
-RUN mkdir -p /var/run/openresty &&
-    chown nginx:nginx /var/log/nginx /var/run/openresty
+RUN mkdir -p /var/run/openresty && \
+    chown nginx:root /var/log/nginx /var/run/openresty
 
 EXPOSE 8000 8443
 USER nginx
