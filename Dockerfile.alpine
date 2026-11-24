@@ -30,11 +30,12 @@ RUN mkdir -p /var/log/nginx /var/lib/nginx/html
 COPY etc/nginx /etc/nginx
 COPY docker-entrypoint.sh /
 
-
-# create an unprivileged user to run od.py
+# create an unprivileged user to run nginx
 RUN addgroup -S -g 1000 nginx && \
-    adduser -S -D -H -u 1000 -G nginx nginx && \
-    chown nginx:nginx /var/log/nginx
+    adduser -S -D -H -u 1000 -G nginx nginx 
+
+RUN mkdir -p /var/run/openresty &&
+    chown nginx:nginx /var/log/nginx /var/run/openresty
 
 EXPOSE 8000 8443
 USER nginx
