@@ -36,6 +36,10 @@ RUN addgroup -S -g 1000 nginx && \
     adduser -S -D -H -u 1000 -G nginx nginx && \
     chown nginx:nginx /var/log/nginx
 
+# nginx: [emerg] mkdir() "/etc/nginx/client_body_temp" failed (13: Permission denied)
+RUN mkdir -p /etc/nginx/client_body_temp && \
+    chown -R nginx:nginx /etc/nginx/client_body_temp
+
 EXPOSE 8000 8443
 USER nginx
 CMD ["/docker-entrypoint.sh"]
